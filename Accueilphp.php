@@ -3,26 +3,30 @@
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" type="text/css" href="style.css">
-	<?php
+	
+<?php
 	$UserName = "Lazarecki Jimmy";
-	$isconnected = false
+	$isconnected = true
 	?>
-
 	
 	
 
 </head>
-<?php if ($isconnected = true) {
-	echo "
+
 <body>
 
 <header> <!-- Haut de page contenant le logo ainsi que le nom et prénom de l'utilisateur connecté -->
 	<nav id="navbox">
 
 	<div id="logo">
-	<img src="logo.png" alt="Logo de l'entreprise">
+	<img src="images/logo.png" alt="Logo de l'entreprise">
 	</div>
-		 <p><a href=""><?php echo '$UseName'; ?></a></p>
+	     <?php if ($isconnected = true): ?>
+	     	<p><a href=""> <? echo $UserName; ?> </a></p>
+	     <? elseif ($isconnected = false): ?>
+	     	<p><a href="">Invité</a></p>
+	     <? endif; ?>
+		 
 	</nav>
 </header>
 
@@ -33,7 +37,7 @@
 	<h1>Texte présentation du GBAF et du site</h1>
     <p>Présentation lroem ipsum dksjfdlfskfhjdsklfhsjfdklshjdskfshdjk</p>
     <div id="illustrationbox">
-    <img id="illustration" src="logo.png">
+    <img id="illustration" src="images/logo.png">
     </div>
     
 
