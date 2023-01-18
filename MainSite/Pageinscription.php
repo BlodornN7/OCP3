@@ -13,11 +13,9 @@
 <section>
  <div id="Connexionsection">    
 	<h1>Page de connexion</h1>
-    <form action="submit_contact.php" method="GET">
-      <label for="Nom">Nom:</label><br>
-      <input type="text" id="Nom" name="Nom"><br>
-      <label for="prenom">Prénom</label><br>
-      <input type="text" id="prenom" name="prenom"><br>
+    <form action="submit_contact.php" method="POST">
+      <label for="FullName">Nom complet</label><br>
+      <input type="text" id="FullName" name="FullName"><br>
       <label for="UserName">Nom d'utilisateur</label><br>
       <input type="text" id="UserName" name="UserName"><br>
       <label for="Password">Mot de passe</label><br>

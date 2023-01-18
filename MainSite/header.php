@@ -4,6 +4,6 @@
 	<div id="logo">
 	<img src="images/logo.png" alt="Logo de l'entreprise">
 	</div>
-		 <p><a href="">Nom Prénom</a></p>
+		 <p><a href=""> Nom Prénom</a></p>
 	</nav>
 </header>
