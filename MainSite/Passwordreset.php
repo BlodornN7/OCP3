@@ -1,16 +1,27 @@
-
 <?php
+try
+{
+    $db = new PDO('mysql:host=localhost;dbname=gbaf_database;charset=utf8', 'root', 'root');
+}
 
-$username = "Jimmy" ?>
-<?php $SecretAnswer = "Charlotte" 
+catch (Exception $e) 
+{
+    die('Erreur : ' . $e->getMessage());
+}
 
-?>
+$username = $_POST['username'];
+$SecretAnswer = $_POST['SecretAnswer'];
 
-<?php if ($_POST['username'] === $username && $_POST['SecretAnswer'] === $SecretAnswer) { include_once('NewPassword_submit.php');
+$CheckUsernameAndSecretAnswerSQL = $db->prepare('SELECT * FROM users WHERE username = :username AND secret_answer = :secret_answer');
+$CheckUsernameAndSecretAnswerSQL->bindParam(':username', $username);
+$CheckUsernameAndSecretAnswerSQL->bindParam(':secret_answer', $SecretAnswer);
+$CheckUsernameAndSecretAnswerSQL->execute();
+$user = $CheckUsernameAndSecretAnswerSQL->fetch();
+
+if ($user["username"] === $username && $user["secret_answer"] === $SecretAnswer) {
+        include_once('NewPassword_submit.php');
         // code...
 }
 
 else { include_once('ForgottenPasswordFail.php'); } ?> 
         
-<?php $_POST['SecretAnswer']; ?>
-<?php $_POST['username']; ?>

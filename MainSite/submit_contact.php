@@ -1,14 +1,63 @@
-<h1>Message bien reçu !</h1>
-        
-<div class="card">
+<?php 
+try
+{
+    $db = new PDO('mysql:host=localhost;dbname=gbaf_database;charset=utf8', 'root', 'root');
+}
+
+catch (Exception $e) 
+{
+    die('Erreur : ' . $e->getMessage());
+}
+
+
+$fullname = $_POST['FullName'];
+$username = $_POST['UserName'];
+$password = $_POST['Password'];
+$secretquestion = $_POST['SecretQuestion'];
+$secretanswer = $_POST['SecretAnswer'];
+//
+$CheckUsernameAvailableSQL = 'SELECT * FROM users WHERE username = $username ';
+$CheckFullNameAvailableSQL = 'SELECT * FROM users WHERE username = $fullname ';
+
+
+
+
+//Demande à l'utilisateur si le nom d'utilisateur est déjà utilisé
+$CheckUsernameAvailableSQL = $db->prepare("SELECT * FROM users WHERE username = :username");
+$CheckUsernameAvailableSQL->bindParam(':username', $username);
+$CheckUsernameAvailableSQL->execute();
+$user1 = $CheckUsernameAvailableSQL->fetch();
+//Demande à SQL de vérifier si le nom complet est déjà utilisé
+$CheckFullNameAvailableSQL = $db->prepare("SELECT * FROM users WHERE full_name = :fullname");
+$CheckFullNameAvailableSQL->bindParam(':fullname', $fullname);
+$CheckFullNameAvailableSQL->execute();
+$user2 = $CheckFullNameAvailableSQL->fetch();
+if ($user1) {
+    echo "Le nom d'utilisateur n'est pas disponible";
+    exit(); // ce code stoppe le script
+} elseif ($user2) {
+    echo "Le nom complet est déjà utilisé";
+    exit();
+    // code...
+} 
+else {
+
     
-    <div class="card-body">
-        <h5 class="card-title">Rappel de vos informations</h5>
-        <p class="card-text"><b>Nom</b> : <?php echo $_GET['Nom']; ?></p>
-        <p class="card-text"><b>prenom</b> : <?php echo $_GET['prenom']; ?>
-        <p class="card-text"><b>UserName</b> : <?php echo $_GET['UserName']; ?></p>
-        <p class="card-text"><b>Password</b> : <?php echo $_GET['Password']; ?></p>
-        <p class="card-text"><b>Question secrète</b> : <?php echo $_GET['SecretQuestion']; ?></p>
-        <p class="card-text"><b>Réponse à la question secrète</b> : <?php echo $_GET['SecretAnswer']; ?></p>
-    </div>
-</div>
+
+//Ecriture de la requête
+$sqlQuery = 'INSERT INTO users(full_name, username, password, secret_question, secret_answer) VALUES (:full_name, :username, :password, :secret_question, :secret_answer)';
+//Préparation
+$insertUser = $db->prepare($sqlQuery);
+// Execution
+$insertUser->execute([
+'full_name' => $fullname,
+'username' => $username,
+'password' => $password,
+'secret_question' => $secretquestion,
+'secret_answer' => $secretanswer,
+]); };
+
+?>
+
+
+    
